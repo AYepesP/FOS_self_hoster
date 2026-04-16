@@ -6,6 +6,16 @@ A PaaS that lets non-technical users self-host open source apps (Immich, Nextclo
 
 ---
 
+## Monorepo Structure
+
+This is a monorepo containing all projects for the data-vault platform. Each sub-project lives in its own folder and has a `CLAUDE.md` with project-specific context.
+
+| Folder | Description |
+|--------|-------------|
+| `landing/` | Next.js waitlist landing page — primary PMF validation tool |
+
+---
+
 ## Product Vision
 
 Users get a clean app-store interface. When they install an app, we automatically provision an isolated Docker container on our managed VPS infrastructure. No terminal, no YAML, no DNS headaches.
