@@ -20,13 +20,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "data-vault — Your apps. Your data. Zero server headaches.",
+  title: "Almerno — Your apps. Your data. Big Tech doesn't get a vote.",
   description:
-    "Self-host Immich, Nextcloud, and more through a simple app store. No terminal. No YAML. No technical knowledge required. Join the waitlist.",
+    "Self-host Immich, Nextcloud, Vaultwarden, and more through a simple app store. No terminal. No YAML. No IT degree. Join the waitlist.",
   openGraph: {
-    title: "data-vault — Your apps. Your data. Zero server headaches.",
+    title: "Almerno — Your apps. Your data. Big Tech doesn't get a vote.",
     description:
-      "Self-host your favourite open source apps without touching a server. Privacy-first, built for non-technical people.",
+      "An app store for privacy-first tools. Install in one click, we handle the server, you keep the keys.",
     type: "website",
   },
 };

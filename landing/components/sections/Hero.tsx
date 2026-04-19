@@ -40,13 +40,13 @@ export default function Hero() {
           <br />
           <span className="text-[#f0eeff]">Your data.</span>
           <br />
-          <span className="text-[#f0eeff]/60">Zero server headaches.</span>
+          <span className="text-[#f0eeff]/60">Big Tech doesn&apos;t get a vote.</span>
         </h1>
 
         <p className="animate-reveal-up delay-200 text-lg sm:text-xl text-[#6b6b8a] max-w-2xl leading-relaxed font-light">
           An app store for privacy-first tools — Immich, Nextcloud, Vaultwarden, and more.
-          Install in one click. We handle the server.{" "}
-          <span className="text-[#c4b5fd]/80">You keep the keys.</span>
+          One click to install. We run the server.{" "}
+          <span className="text-[#c4b5fd]/80">You hold the keys. Always.</span>
         </p>
 
         <div className="animate-reveal-up delay-300 w-full flex justify-center">

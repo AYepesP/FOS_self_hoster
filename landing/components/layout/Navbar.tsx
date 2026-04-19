@@ -31,7 +31,7 @@ export default function Navbar() {
             </svg>
           </div>
           <span className="font-display font-700 text-[#f0eeff] tracking-tight text-lg">
-            data<span className="text-[#7c3aed]">-vault</span>
+            alm<span className="text-[#7c3aed]">erno</span>
           </span>
         </div>
 

@@ -12,7 +12,7 @@ const faqs = [
   },
   {
     q: "Do I need any technical knowledge?",
-    a: "None. If you can use a smartphone app store, you can use data-vault. We handle servers, updates, backups, SSL certificates, and networking. You just use your apps.",
+    a: "None. If you can use a smartphone app store, you can use Almerno. We handle servers, updates, backups, SSL certificates, and networking. You just use your apps.",
   },
   {
     q: "How much will it cost?",
@@ -20,7 +20,7 @@ const faqs = [
   },
   {
     q: "Is this open source?",
-    a: "The apps we host (Immich, Nextcloud, Vaultwarden, etc.) are all fully open source — that's non-negotiable. The data-vault platform itself is currently closed source, but we plan to open source components over time. The infrastructure code that handles your containers will be auditable.",
+    a: "The apps we host (Immich, Nextcloud, Vaultwarden, etc.) are all fully open source — that's non-negotiable. The Almerno platform itself is currently closed source, but we plan to open source components over time. The infrastructure code that handles your containers will be auditable.",
   },
   {
     q: "What happens if I want to leave?",

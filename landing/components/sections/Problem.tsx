@@ -41,7 +41,7 @@ export default function Problem() {
         <div className="text-center mb-16">
           <p className="text-xs text-[#7c3aed] uppercase tracking-[0.2em] font-medium mb-4">The problem</p>
           <h2 className="font-display font-bold text-3xl sm:text-4xl text-[#f0eeff] tracking-tight">
-            Privacy shouldn&apos;t require a computer science degree.
+            Privacy shouldn&apos;t come with homework.
           </h2>
         </div>
 

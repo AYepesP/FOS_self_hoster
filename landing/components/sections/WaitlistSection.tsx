@@ -24,7 +24,7 @@ export default function WaitlistSection() {
               Reserve your spot
             </p>
             <h2 className="font-display font-bold text-3xl sm:text-5xl text-[#f0eeff] tracking-tight leading-tight">
-              Be the first to get access.
+              Your data belongs to you.<br className="hidden sm:block" /> Time to act on it.
             </h2>
             <p className="mt-4 text-[#6b6b8a] text-base max-w-lg mx-auto font-light leading-relaxed">
               We&apos;re building in the open. Waitlist members get early access, founder pricing, and

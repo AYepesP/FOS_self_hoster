@@ -12,7 +12,7 @@ export default function Footer() {
             </svg>
           </div>
           <span className="font-display text-sm text-[#f0eeff]/50 tracking-tight">
-            data<span className="text-[#7c3aed]/70">-vault</span>
+            alm<span className="text-[#7c3aed]/70">erno</span>
           </span>
         </div>
         <div className="flex items-center gap-5">
@@ -21,7 +21,7 @@ export default function Footer() {
           </a>
           <span className="text-[#6b6b8a]/30 text-xs">|</span>
           <p className="text-xs text-[#6b6b8a] font-light tracking-wide">
-            Built for people who value privacy. © {new Date().getFullYear()} data-vault.
+            Built for people who value privacy. © {new Date().getFullYear()} Almerno.
           </p>
         </div>
       </div>
