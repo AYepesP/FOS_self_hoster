@@ -14,8 +14,8 @@ const steps = [
   {
     number: "03",
     title: "Your data stays yours",
-    body: "End-to-end encrypted. You hold the keys. We can't read your files, photos, or passwords — and we never will. Cancel any time and take your data with you.",
-    tag: "Your Keys",
+    body: "Your apps run in a dedicated container that belongs only to you — no shared infrastructure, no data mining, no ads. We profit from your subscription, not your data. Cancel any time and take everything with you.",
+    tag: "Your Container",
   },
 ];
 

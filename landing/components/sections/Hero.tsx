@@ -46,7 +46,7 @@ export default function Hero() {
         <p className="animate-reveal-up delay-200 text-lg sm:text-xl text-[#5a8a87] max-w-2xl leading-relaxed font-light">
           An app store for privacy-first tools — Immich, Nextcloud, Vaultwarden, and more.
           One click to install. We run the server.{" "}
-          <span className="text-[#5ececa]/80">You hold the keys. Always.</span>
+          <span className="text-[#5ececa]/80">No ads. No tracking. No selling your data. Ever.</span>
         </p>
 
         <div className="animate-reveal-up delay-300 w-full flex justify-center">
@@ -55,7 +55,7 @@ export default function Hero() {
 
         <div className="animate-reveal-fade delay-500 flex flex-wrap items-center justify-center gap-6 text-sm text-[#5a8a87]">
           {[
-            { icon: "🔒", label: "End-to-end encrypted" },
+            { icon: "🔒", label: "Your data, not ours" },
             { icon: "🚫", label: "No tracking" },
             { icon: "🗑️", label: "Delete anytime" },
           ].map(({ icon, label }) => (

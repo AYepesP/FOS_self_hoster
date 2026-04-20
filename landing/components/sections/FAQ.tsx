@@ -8,7 +8,7 @@ import {
 const faqs = [
   {
     q: "Where is my data stored?",
-    a: "Your apps and data run in dedicated containers on our managed infrastructure. All data is encrypted at rest with AES-256. You hold the encryption keys — we cannot access your files, photos, or passwords. You can export or delete everything at any time.",
+    a: "Your apps run in a dedicated, isolated container on our managed infrastructure — not shared with any other user. Data is encrypted at rest. We don't access your data for advertising or profiling, and we never sell it. You can export or delete everything at any time.",
   },
   {
     q: "Do I need any technical knowledge?",
