@@ -38,8 +38,6 @@ export default function HowItWorks() {
         </div>
 
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="hidden md:block absolute top-10 left-[calc(33%+1rem)] right-[calc(33%+1rem)] h-px bg-gradient-to-r from-[#2a9d98]/40 via-[#2a9d98]/20 to-[#2a9d98]/40" />
-
           {steps.map(({ number, title, body, tag }) => (
             <div key={number} className="relative flex flex-col items-start gap-5">
               <div className="flex items-center gap-4">
