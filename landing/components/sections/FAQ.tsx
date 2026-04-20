@@ -33,8 +33,8 @@ export default function FAQ() {
     <section className="py-28 px-6">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-16">
-          <p className="text-xs text-[#7c3aed] uppercase tracking-[0.2em] font-medium mb-4">Questions</p>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl text-[#f0eeff] tracking-tight">
+          <p className="text-xs text-[#2a9d98] uppercase tracking-[0.2em] font-medium mb-4">Questions</p>
+          <h2 className="font-display font-bold text-3xl sm:text-4xl text-[#e8f8f8] tracking-tight">
             We&apos;d ask the same things.
           </h2>
         </div>
@@ -44,12 +44,12 @@ export default function FAQ() {
             <AccordionItem
               key={i}
               value={i}
-              className="border border-white/5 bg-[#0e0e1a] rounded-2xl px-6 overflow-hidden data-open:border-[#7c3aed]/30 transition-colors duration-200"
+              className="border border-white/5 bg-[#0f2240] rounded-2xl px-6 overflow-hidden data-open:border-[#2a9d98]/30 transition-colors duration-200"
             >
-              <AccordionTrigger className="font-display font-medium text-[#f0eeff] text-left hover:no-underline py-5 text-sm sm:text-base cursor-pointer">
+              <AccordionTrigger className="font-display font-medium text-[#e8f8f8] text-left hover:no-underline py-5 text-sm sm:text-base cursor-pointer">
                 {q}
               </AccordionTrigger>
-              <AccordionContent className="text-sm text-[#6b6b8a] leading-relaxed font-light pb-5">
+              <AccordionContent className="text-sm text-[#5a8a87] leading-relaxed font-light pb-5">
                 {a}
               </AccordionContent>
             </AccordionItem>

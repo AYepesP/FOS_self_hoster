@@ -35,8 +35,8 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --color-violet: var(--violet);
-  --color-violet-dim: var(--violet-dim);
+  --color-teal: var(--teal);
+  --color-teal-dim: var(--teal-dim);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -44,35 +44,35 @@
 }
 
 :root {
-  --background: #080810;
-  --foreground: #f0eeff;
-  --card: #0e0e1a;
-  --card-foreground: #f0eeff;
-  --popover: #0e0e1a;
-  --popover-foreground: #f0eeff;
-  --primary: #7c3aed;
+  --background: #0c1a35;
+  --foreground: #e8f8f8;
+  --card: #0f2240;
+  --card-foreground: #e8f8f8;
+  --popover: #0f2240;
+  --popover-foreground: #e8f8f8;
+  --primary: #2a9d98;
   --primary-foreground: #ffffff;
-  --secondary: #13131f;
-  --secondary-foreground: #f0eeff;
-  --muted: #13131f;
-  --muted-foreground: #6b6b8a;
-  --accent: #7c3aed;
+  --secondary: #112038;
+  --secondary-foreground: #e8f8f8;
+  --muted: #112038;
+  --muted-foreground: #5a8a87;
+  --accent: #2a9d98;
   --accent-foreground: #ffffff;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: rgba(124, 58, 237, 0.15);
+  --border: rgba(42, 157, 152, 0.2);
   --input: rgba(255, 255, 255, 0.06);
-  --ring: rgba(124, 58, 237, 0.5);
-  --violet: #7c3aed;
-  --violet-dim: rgba(124, 58, 237, 0.15);
+  --ring: rgba(94, 206, 202, 0.5);
+  --teal: #2a9d98;
+  --teal-dim: rgba(42, 157, 152, 0.15);
   --radius: 0.625rem;
-  --sidebar: #0e0e1a;
-  --sidebar-foreground: #f0eeff;
-  --sidebar-primary: #7c3aed;
+  --sidebar: #0f2240;
+  --sidebar-foreground: #e8f8f8;
+  --sidebar-primary: #2a9d98;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #13131f;
-  --sidebar-accent-foreground: #f0eeff;
-  --sidebar-border: rgba(124, 58, 237, 0.15);
-  --sidebar-ring: rgba(124, 58, 237, 0.5);
+  --sidebar-accent: #112038;
+  --sidebar-accent-foreground: #e8f8f8;
+  --sidebar-border: rgba(42, 157, 152, 0.2);
+  --sidebar-ring: rgba(94, 206, 202, 0.5);
 }
 
 @layer base {
@@ -81,7 +81,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    background-color: #080810;
+    background-color: #0c1a35;
   }
   html {
     @apply font-sans;
@@ -95,15 +95,15 @@
   }
   .grid-texture {
     background-image:
-      linear-gradient(rgba(124, 58, 237, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(124, 58, 237, 0.04) 1px, transparent 1px);
+      linear-gradient(rgba(42, 157, 152, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(42, 157, 152, 0.04) 1px, transparent 1px);
     background-size: 60px 60px;
   }
-  .glow-violet {
-    box-shadow: 0 0 80px 20px rgba(124, 58, 237, 0.12);
+  .glow-teal {
+    box-shadow: 0 0 80px 20px rgba(94, 206, 202, 0.12);
   }
   .text-gradient {
-    background: linear-gradient(135deg, #f0eeff 0%, #c4b5fd 50%, #7c3aed 100%);
+    background: linear-gradient(135deg, #e8f8f8 0%, #5ececa 50%, #2a9d98 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

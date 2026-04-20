@@ -35,13 +35,13 @@ export default function WaitlistForm() {
   if (status === "success") {
     return (
       <div className="flex flex-col items-center gap-3 py-6 animate-reveal-fade">
-        <div className="w-12 h-12 rounded-full bg-[#7c3aed]/20 border border-[#7c3aed]/40 flex items-center justify-center">
+        <div className="w-12 h-12 rounded-full bg-[#2a9d98]/20 border border-[#2a9d98]/40 flex items-center justify-center">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M4 10l4.5 4.5 7.5-8" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M4 10l4.5 4.5 7.5-8" stroke="#2a9d98" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
-        <p className="font-display text-lg font-semibold text-[#f0eeff]">You&apos;re on the list.</p>
-        <p className="text-sm text-[#6b6b8a] text-center max-w-xs">
+        <p className="font-display text-lg font-semibold text-[#e8f8f8]">You&apos;re on the list.</p>
+        <p className="text-sm text-[#5a8a87] text-center max-w-xs">
           We&apos;ll email you when early access opens. No spam — ever.
         </p>
       </div>
@@ -52,8 +52,8 @@ export default function WaitlistForm() {
     <form onSubmit={handleSubmit} className="w-full max-w-md flex flex-col gap-4">
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex-1 flex flex-col gap-1.5">
-          <Label htmlFor="email" className="text-xs text-[#6b6b8a] uppercase tracking-widest font-medium">
-            Email <span className="text-[#7c3aed]">*</span>
+          <Label htmlFor="email" className="text-xs text-[#5a8a87] uppercase tracking-widest font-medium">
+            Email <span className="text-[#2a9d98]">*</span>
           </Label>
           <Input
             id="email"
@@ -62,12 +62,12 @@ export default function WaitlistForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="bg-white/5 border-white/10 text-[#f0eeff] placeholder:text-[#6b6b8a] focus:border-[#7c3aed]/60 focus:ring-[#7c3aed]/30 h-11 rounded-xl"
+            className="bg-white/5 border-white/10 text-[#e8f8f8] placeholder:text-[#5a8a87] focus:border-[#2a9d98]/60 focus:ring-[#2a9d98]/30 h-11 rounded-xl"
           />
         </div>
         <div className="flex-1 flex flex-col gap-1.5">
-          <Label htmlFor="firstName" className="text-xs text-[#6b6b8a] uppercase tracking-widest font-medium">
-            First name <span className="text-[#6b6b8a]">(optional)</span>
+          <Label htmlFor="firstName" className="text-xs text-[#5a8a87] uppercase tracking-widest font-medium">
+            First name <span className="text-[#5a8a87]">(optional)</span>
           </Label>
           <Input
             id="firstName"
@@ -75,7 +75,7 @@ export default function WaitlistForm() {
             placeholder="Alex"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            className="bg-white/5 border-white/10 text-[#f0eeff] placeholder:text-[#6b6b8a] focus:border-[#7c3aed]/60 focus:ring-[#7c3aed]/30 h-11 rounded-xl"
+            className="bg-white/5 border-white/10 text-[#e8f8f8] placeholder:text-[#5a8a87] focus:border-[#2a9d98]/60 focus:ring-[#2a9d98]/30 h-11 rounded-xl"
           />
         </div>
       </div>
@@ -83,7 +83,7 @@ export default function WaitlistForm() {
       <Button
         type="submit"
         disabled={status === "loading" || !email}
-        className="w-full h-12 bg-[#7c3aed] hover:bg-[#6d28d9] text-white font-display font-semibold text-base rounded-xl transition-all duration-200 hover:shadow-[0_0_30px_rgba(124,58,237,0.35)] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+        className="w-full h-12 bg-[#2a9d98] hover:bg-[#1b7874] text-white font-display font-semibold text-base rounded-xl transition-all duration-200 hover:shadow-[0_0_30px_rgba(42,157,152,0.35)] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
       >
         {status === "loading" ? (
           <span className="flex items-center gap-2">
@@ -102,9 +102,9 @@ export default function WaitlistForm() {
         <p className="text-sm text-red-400 text-center animate-reveal-fade">{errorMsg}</p>
       )}
 
-      <p className="text-xs text-[#6b6b8a] text-center leading-relaxed">
+      <p className="text-xs text-[#5a8a87] text-center leading-relaxed">
         No spam. Unsubscribe any time.{" "}
-        <span className="text-[#7c3aed]/70">We never sell your data.</span>
+        <span className="text-[#2a9d98]/70">We never sell your data.</span>
       </p>
     </form>
   );
