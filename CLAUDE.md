@@ -68,6 +68,7 @@ After every completed unit of work:
 | Folder | Description | Owner Agent |
 |--------|-------------|-------------|
 | `landing/` | Next.js waitlist landing page — primary PMF validation tool | Chief Landing Page Officer (see `landing/CLAUDE.md`) |
+| `infra/` | Infrastructure design — container provisioning, isolation, networking, storage | Infrastructure Architect (see `infra/CLAUDE.md`) |
 
 ---
 

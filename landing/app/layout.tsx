@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, DM_Sans, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const bricolage = Bricolage_Grotesque({
@@ -41,7 +42,10 @@ export default function RootLayout({
       lang="en"
       className={`${bricolage.variable} ${dmSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#0c1a35]">{children}</body>
+      <body className="min-h-full flex flex-col bg-[#0c1a35]">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
