@@ -84,8 +84,8 @@ Architecture phase complete as of 2026-04-27. All decisions finalized.
 - **PoC underway (2026-05-05)** — building and learning together in `infra/poc/` on the home server before any VPS spend.
 - Control plane language decided: **Python + FastAPI**.
 - Encryption approach decided: **gocryptfs**, always on, hard fail at startup if not available.
-- Files written so far: `encryption.py` (complete), `docker_client.py` (complete).
-- Next: app catalog (`apps/`), database layer, provisioner, API + dashboard.
+- Files written so far: `encryption.py`, `docker_client.py`, `apps/catalog.json`, `apps/loader.py`, `database.py`, `requirements.txt`, `.env.example` — all complete.
+- Next: `provisioner.py` (orchestrates encryption + Docker + DB), then `main.py` (FastAPI routes + dashboard), then `setup.sh`.
 - Landing page PMF validation is still running in parallel.
 
 ---

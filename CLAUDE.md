@@ -117,21 +117,24 @@ Privacy-conscious but non-technical. They want data ownership but lack either th
 
 - **Market validation** — strong signal from privacy communities and homelab burnout discussions. People want this.
 - **Brand** — working name Almerno, teal palette, logo in place.
-- **Landing page** — initial build live on Vercel. Waitlist form, social proof, FAQ, HowItWorks sections complete.
+- **Landing page** — live on Vercel at almerno.com. Waitlist form, social proof, FAQ, HowItWorks sections complete.
+- **Email capture** — Loops.so fully wired (API key + transactional confirmation email). DNS (SPF/DKIM/DMARC) verified. Real signups being collected.
+- **Custom domain** — almerno.com pointed to Vercel and live.
+- **PoC started** — `infra/poc/control_plane/` has `encryption.py` (gocryptfs) and `docker_client.py` (Docker SDK) complete.
 
 ### Active
 
-- Loops.so email integration — API key needed, integration built but not yet wired to a confirmed list.
+- **Infrastructure PoC** — proving the core provisioning engine locally before VPS spend. Python + FastAPI. See `infra/PLAN.md`.
 
 ### Next Milestone
 
-- Confirm Loops.so list ID and validate end-to-end email capture.
-- A/B test pricing copy on landing page to gauge willingness to pay.
+- Finish remaining PoC modules: `apps/`, `database.py`, `provisioner.py`, `main.py`, `setup.sh`.
+- Validate end-to-end: install Vaultwarden/Actual Budget/Mealie via a single API call on local machine.
 
 ### After That
 
-- Design the product architecture end-to-end.
-- Build and test an MVP.
+- Move to Phase 0 of production plan: Hetzner VPS, OS hardening, Docker, Traefik, wildcard TLS.
+- A/B test pricing copy on landing page to gauge willingness to pay.
 
 ---
 

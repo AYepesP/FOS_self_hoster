@@ -1,0 +1,38 @@
+{
+    "vaultwarden": {
+        "display_name": "Vaultwarden",
+        "logo": "vaultwarden.svg",
+        "image": "vaultwarden/server:1.32.7",
+        "internal_port": 80,
+        "data_path": "/data",
+        "mem_limit": "256m",
+        "cpu_quota": 25000,
+        "environment": {
+            "SIGNUPS_ALLOWED": "false"
+        }
+    },
+
+    "actual_budget": {
+        "display_name": "Actual Budget",
+        "logo": "actual_budget.svg",
+        "image": "actualbudget/actual-server:25.4.0",
+        "internal_port": 5006,
+        "data_path": "/data",
+        "mem_limit": "512m",
+        "cpu_quota": 25000,
+        "environment": {}
+    },
+
+    "mealie": {
+        "display_name": "Mealie",
+        "logo": "mealie.svg",
+        "image": "ghcr.io/mealie-recipes/mealie:v2.7.1",
+        "internal_port": 9000,
+        "data_path": "/app/data",
+        "mem_limit": "1g",
+        "cpu_quota": 50000,
+        "environment": {
+            "ALLOW_SIGNUP": "false"
+        }
+    }
+}
