@@ -84,8 +84,11 @@ Architecture phase complete as of 2026-04-27. All decisions finalized.
 - **PoC underway (2026-05-05)** — building and learning together in `infra/poc/` on the home server before any VPS spend.
 - Control plane language decided: **Python + FastAPI**.
 - Encryption approach decided: **gocryptfs**, always on, hard fail at startup if not available.
-- Files written so far: `encryption.py`, `docker_client.py`, `apps/catalog.json`, `apps/loader.py`, `database.py`, `requirements.txt`, `.env.example` — all complete.
-- Next: `provisioner.py` (orchestrates encryption + Docker + DB), then `main.py` (FastAPI routes + dashboard), then `setup.sh`.
+- Files complete: `encryption.py`, `docker_client.py`, `apps/catalog.json`, `apps/loader.py`, `database.py`, `provisioner.py`, `requirements.txt`, `.env.example`.
+- `provisioner.py` owns the full provision/deprovision lifecycle: path traversal validation → encrypted volume init/mount → Docker network + container → DB write-ahead → health poll → unmount on cleanup.
+- Security note: `user_id` and `app_id` are validated against `r"[a-zA-Z0-9][a-zA-Z0-9_-]{0,62}"` before any filesystem or Docker call. Error messages do not echo raw input values.
+- Next session: (1) verify gocryptfs installed, (2) copy `.env.example` → `.env` and set `MASTER_SECRET`, (3) run `test_provision.py` from `infra/poc/` to validate end-to-end, (4) build `main.py` (FastAPI routes + HTML dashboard), (5) write `setup.sh`.
+- Test script to run: `infra/poc/test_provision.py` — creates user `alice`, provisions `vaultwarden`, prints `localhost:{port}`.
 - Landing page PMF validation is still running in parallel.
 
 ---

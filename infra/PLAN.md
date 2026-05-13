@@ -69,11 +69,11 @@ infra/poc/
 
 - [x] Design encryption layer (`encryption.py`) — gocryptfs init/mount/unmount, key derivation
 - [x] Design Docker management layer (`docker_client.py`) — networks, containers, resource limits
-- [ ] App catalog (`apps/`) — AppConfig dataclass + 3 app definitions
-- [ ] Database layer (`database.py`) — SQLite schema, install CRUD
-- [ ] Provisioner (`provisioner.py`) — orchestrates encryption + Docker in the right order
+- [x] App catalog (`apps/`) — AppConfig dataclass + 3 app definitions
+- [x] Database layer (`database.py`) — SQLite schema, install CRUD
+- [x] Provisioner (`provisioner.py`) — orchestrates encryption + Docker in the right order; includes path traversal validation
 - [ ] API + dashboard (`main.py`) — FastAPI routes + browser UI
-- [ ] `setup.sh` + `.env.example` + `requirements.txt`
+- [ ] `setup.sh`
 - [ ] End-to-end test: provision all 3 apps, verify encryption on disk, deprovision, verify plaintext gone
 
 **Validate before moving to Phase 0:**

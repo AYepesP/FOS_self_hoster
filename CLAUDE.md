@@ -120,7 +120,7 @@ Privacy-conscious but non-technical. They want data ownership but lack either th
 - **Landing page** — live on Vercel at almerno.com. Waitlist form, social proof, FAQ, HowItWorks sections complete.
 - **Email capture** — Loops.so fully wired (API key + transactional confirmation email). DNS (SPF/DKIM/DMARC) verified. Real signups being collected.
 - **Custom domain** — almerno.com pointed to Vercel and live.
-- **PoC started** — `infra/poc/control_plane/` has `encryption.py` (gocryptfs) and `docker_client.py` (Docker SDK) complete.
+- **PoC core engine complete** — `encryption.py`, `docker_client.py`, `database.py`, `apps/catalog.json`, `apps/loader.py`, and `provisioner.py` all done. Path traversal validation in place.
 
 ### Active
 
@@ -128,7 +128,9 @@ Privacy-conscious but non-technical. They want data ownership but lack either th
 
 ### Next Milestone
 
-- Finish remaining PoC modules: `apps/`, `database.py`, `provisioner.py`, `main.py`, `setup.sh`.
+- Run `infra/poc/test_provision.py` to validate end-to-end on home server (requires gocryptfs + `.env` set up).
+- Build `main.py` — FastAPI routes + HTML dashboard.
+- Write `setup.sh`.
 - Validate end-to-end: install Vaultwarden/Actual Budget/Mealie via a single API call on local machine.
 
 ### After That
