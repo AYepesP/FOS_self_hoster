@@ -25,7 +25,7 @@ def init_volume(encrypted_path: Path, password: str) -> None:
 def mount_volume(encrypted_path: Path, plaintext_path: Path, password: str) -> None:
     plaintext_path.mkdir(parents=True, exist_ok=True)
     result = subprocess.run(
-        ["gocryptfs", "-quiet", str(encrypted_path), str(plaintext_path)],
+        ["gocryptfs", "-quiet", "-allow_other", str(encrypted_path), str(plaintext_path)],
         input=f"{password}\n",
         text=True,
         capture_output=True,

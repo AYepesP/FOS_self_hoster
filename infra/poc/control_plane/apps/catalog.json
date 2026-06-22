@@ -7,6 +7,8 @@
         "data_path": "/data",
         "mem_limit": "256m",
         "cpu_quota": 25000,
+        "privacy_tier": "e2e",
+        "privacy_note": "Your vault is encrypted in your browser before leaving your device. Almerno cannot read your passwords.",
         "environment": {
             "SIGNUPS_ALLOWED": "false"
         }
@@ -20,6 +22,8 @@
         "data_path": "/data",
         "mem_limit": "512m",
         "cpu_quota": 25000,
+        "privacy_tier": "encrypted_at_rest",
+        "privacy_note": "Your financial data is encrypted on disk when not in use. While the app is running, it is processed on Almerno's servers.",
         "environment": {}
     },
 
@@ -31,6 +35,8 @@
         "data_path": "/app/data",
         "mem_limit": "1g",
         "cpu_quota": 50000,
+        "privacy_tier": "encrypted_at_rest",
+        "privacy_note": "Your recipes and meal plans are encrypted on disk when not in use. The server processes your data to serve the app.",
         "environment": {
             "ALLOW_SIGNUP": "false"
         }

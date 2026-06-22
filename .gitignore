@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+
+# Environment & secrets
+.env
+
+# Database (PoC SQLite)
+*.db
+
+# macOS
+.DS_Store

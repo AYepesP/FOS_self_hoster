@@ -47,6 +47,103 @@ The hardest class of bugs: **nothing crashes, logs show nothing, results are jus
 
 ---
 
+## ⚠️ PoC-Only Deviations from Production (MUST REVERT BEFORE PROD)
+
+These settings exist only to make local testing possible. They represent real security vulnerabilities in a production environment. Every item here must be reverted before any real user data touches the system.
+
+| Setting | File | PoC value | Prod value | Risk if left in |
+|---------|------|-----------|------------|-----------------|
+| `SIGNUPS_ALLOWED` | `apps/catalog.json` | `true` | `false` | Anyone who finds the container URL can create a Vaultwarden account |
+
+**Why `SIGNUPS_ALLOWED=true` is test-only:** In production, Almerno's control plane provisions user credentials — self-signup is never needed and is a direct attack surface. Any exposed port with open signup is an invitation for abuse.
+
+**Revert checklist before production:**
+- [ ] Set `SIGNUPS_ALLOWED` back to `"false"` in `catalog.json`
+- [ ] Verify no other catalog entries have open signup equivalents (`ALLOW_SIGNUP`, `DISABLE_REGISTRATION`, etc.)
+
+---
+
+## Known Issue: gocryptfs + Docker Require `-allow_other`
+
+**Discovered:** 2026-06-22, during PoC end-to-end test.
+
+**The problem:** gocryptfs creates a FUSE mount owned by the running user (uid 1000). The Docker daemon runs as root. By default, FUSE blocks all other users — including root — from accessing a user-created mount. Docker cannot bind-mount the plaintext directory into a container without root access to that directory.
+
+**The fix (current, in `encryption.py`):**
+- `/etc/fuse.conf` must have `user_allow_other` uncommented — system-level gate.
+- `mount_volume()` passes `-allow_other` to gocryptfs — opens the mount to root.
+
+**Does this break the privacy model?** No, for two reasons:
+1. The encryption protects against **third parties** (disk theft, Hetzner), not against Almerno as the operator. The decryption key is derived from `MASTER_SECRET`, which Almerno controls — so the operator could always decrypt. `-allow_other` doesn't change this.
+2. Inter-user isolation is maintained by Docker: each user's plaintext is bind-mounted only into their own container. `-allow_other` is about root access, not cross-user access.
+
+**Real risk:** On a multi-user system where multiple people have shell login access, `-allow_other` would allow any of them to walk into another user's plaintext directory while mounted. On a production server with no other SSH users, this is not a live risk.
+
+**Long-term fix:** Switch to **rootless Docker** (Docker daemon runs as uid 1000, same as the gocryptfs mount owner). No `-allow_other` needed — root cannot access the plaintext even while mounted. This is planned for v2 alongside gVisor. See Architecture Principles below.
+
+---
+
+## Privacy Tier System (Pending Implementation)
+
+**Decision made: 2026-06-22.**
+
+Every app in `catalog.json` must declare a `privacy_tier` field. This field drives two things: honest documentation for the team, and a visible tag on each app card in the UI ("E2E Encrypted", "Encrypted at Rest", etc.).
+
+### Why
+
+Not all apps offer the same privacy guarantees. Treating them identically in the catalog — and in the UI — would be misleading. Users deserve to know what they're getting. This also forces us to evaluate every new app we add before it ships.
+
+The root insight: some apps encrypt your data on your device before the server ever sees it (true zero-knowledge). Others require the server to process plaintext to function at all. No infrastructure-level encryption changes the latter — the server must see your data to serve it.
+
+### Tiers
+
+| Tier | Label shown in UI | Meaning |
+|------|-------------------|---------|
+| `e2e` | E2E Encrypted | App encrypts data on the client before the server sees it. Almerno (and any attacker) cannot read your data even while the service is running. Example: Vaultwarden — the Bitwarden protocol encrypts your vault in the browser; the server stores only ciphertext. |
+| `encrypted_at_rest` | Encrypted at Rest | Data is encrypted on disk when the container is stopped. While the container is running, Almerno's infrastructure can access plaintext. Protects against third parties (disk theft, provider breach) but not against the operator. |
+| `partial` | Partial Encryption | Some data is E2E, some is server-visible. Document specifics in the catalog entry. |
+| `none` | Standard Privacy | No encryption beyond TLS in transit. Data is readable by the operator while stored and in use. Honest default for apps that require server-side processing (ML, search indexing, etc.). |
+
+### Current App Assessments
+
+| App | Tier | Reason |
+|-----|------|--------|
+| Vaultwarden | `e2e` | Bitwarden protocol: vault encrypted client-side via AES-256. Server stores encrypted blobs only. Server never sees passwords. This is true even without gocryptfs — our volume encryption is redundant for vault contents but does protect metadata (login timestamps, account count). |
+| Actual Budget | `encrypted_at_rest` | Simple data store; no client-side encryption. Server sees your financial data while running. gocryptfs protects at rest. |
+| Mealie | `encrypted_at_rest` | Server must render recipes, parse imports, serve images. Server-side processing requires plaintext access. gocryptfs protects at rest. |
+
+### Catalog Schema Change (Implemented 2026-06-22)
+
+Each entry in `catalog.json` now carries:
+
+```json
+"privacy_tier": "e2e",
+"privacy_note": "Your vault is encrypted in your browser before leaving your device. Almerno cannot read your passwords."
+```
+
+`loader.py` validates `privacy_tier` against `VALID_PRIVACY_TIERS` at load time — unknown tiers raise a `ValueError` immediately at startup. Both fields are required; omitting either will raise a `KeyError`.
+
+### UI Change (Not Yet Implemented)
+
+On the app store card:
+- Display a small tag using the tier label
+- On hover/tap: show the `privacy_note`
+- Color suggestion: teal for `e2e`, muted teal for `encrypted_at_rest`, grey for `none`
+
+This belongs in the frontend implementation. When implementing, load the `/frontend` skill and reference this section.
+
+### App Evaluation Checklist (for future catalog additions)
+
+Before adding any new app, answer:
+- Does it have documented client-side encryption? (Check their security whitepaper / source)
+- Does the server need to process or index the data to function?
+- What does the app store on disk, and in what format?
+- Is there a known security audit?
+
+If the answers don't clearly support `e2e`, default to `encrypted_at_rest` or `none` and be honest about it.
+
+---
+
 ## Architecture Principles
 
 - **Per-user container isolation.** Each user gets their own container per app. No shared processes, no shared filesystems between users.

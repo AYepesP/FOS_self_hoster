@@ -5,6 +5,9 @@ from pathlib import Path
 CATALOG_PATH = Path(__file__).parent / "catalog.json"
 
 
+VALID_PRIVACY_TIERS = {"e2e", "encrypted_at_rest", "partial", "none"}
+
+
 @dataclass
 class AppConfig:
     app_id: str
@@ -15,6 +18,8 @@ class AppConfig:
     data_path: str
     mem_limit: str
     cpu_quota: int
+    privacy_tier: str
+    privacy_note: str
     environment: dict[str, str]
 
 
@@ -24,6 +29,9 @@ def load_catalog() -> dict[str, AppConfig]:
 
     catalog = {}
     for app_id, entry in raw.items():
+        tier = entry["privacy_tier"]
+        if tier not in VALID_PRIVACY_TIERS:
+            raise ValueError(f"App '{app_id}' has unknown privacy_tier '{tier}'. Valid: {VALID_PRIVACY_TIERS}")
         catalog[app_id] = AppConfig(
             app_id=app_id,
             display_name=entry["display_name"],
@@ -33,6 +41,8 @@ def load_catalog() -> dict[str, AppConfig]:
             data_path=entry["data_path"],
             mem_limit=entry["mem_limit"],
             cpu_quota=entry["cpu_quota"],
+            privacy_tier=tier,
+            privacy_note=entry["privacy_note"],
             environment=entry.get("environment", {}),
         )
 
