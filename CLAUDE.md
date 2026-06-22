@@ -121,17 +121,20 @@ Privacy-conscious but non-technical. They want data ownership but lack either th
 - **Email capture** — Loops.so fully wired (API key + transactional confirmation email). DNS (SPF/DKIM/DMARC) verified. Real signups being collected.
 - **Custom domain** — almerno.com pointed to Vercel and live.
 - **PoC core engine complete** — `encryption.py`, `docker_client.py`, `database.py`, `apps/catalog.json`, `apps/loader.py`, and `provisioner.py` all done. Path traversal validation in place.
+- **Privacy tier system** — `privacy_tier` + `privacy_note` fields in catalog, validated at startup. Tiers: `e2e` (Vaultwarden), `encrypted_at_rest` (Actual Budget, Mealie). UI badges wired in dashboard.
+- **`main.py` complete** — FastAPI control plane + HTML dashboard. Handles concurrent installs. XSS-safe. Confirmed working for all 3 apps.
+- **Mealie permission fix** — image runs as uid 911; fixed with `container_user: "1000:1000"` in catalog, wired through the full stack.
 
 ### Active
 
-- **Infrastructure PoC** — proving the core provisioning engine locally before VPS spend. Python + FastAPI. See `infra/PLAN.md`.
+- **Infrastructure PoC** — provisioning and deprovisioning confirmed working for all 3 apps. Dashboard at `http://localhost:8000`.
 
 ### Next Milestone
 
-- Run `infra/poc/test_provision.py` to validate end-to-end on home server (requires gocryptfs + `.env` set up).
-- Build `main.py` — FastAPI routes + HTML dashboard.
-- Write `setup.sh`.
-- Validate end-to-end: install Vaultwarden/Actual Budget/Mealie via a single API call on local machine.
+- Commit all pending changes (`main.py`, `catalog.json`, `loader.py`, `docker_client.py`, `provisioner.py`, `infra/CLAUDE.md`).
+- Validate port access: confirm each provisioned app is reachable in-browser via its bound host port.
+- Write `setup.sh` — one-shot dependency install + env setup.
+- Explore username encryption: hash `user_id` in filesystem paths to avoid leaking app-per-user metadata on a compromised server.
 
 ### After That
 

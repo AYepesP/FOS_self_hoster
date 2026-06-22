@@ -83,9 +83,9 @@ These settings exist only to make local testing possible. They represent real se
 
 ---
 
-## Privacy Tier System (Pending Implementation)
+## Privacy Tier System (Implemented 2026-06-22)
 
-**Decision made: 2026-06-22.**
+**Decision made and implemented: 2026-06-22.**
 
 Every app in `catalog.json` must declare a `privacy_tier` field. This field drives two things: honest documentation for the team, and a visible tag on each app card in the UI ("E2E Encrypted", "Encrypted at Rest", etc.).
 
@@ -174,19 +174,57 @@ Architecture phase complete as of 2026-04-27. All decisions finalized.
 
 ---
 
-## Current State
+## Current State (as of 2026-06-22)
 
 - Architecture phase complete (2026-04-27). All tech decisions finalized.
 - Implementation plan written: see `PLAN.md` — PoC phase + 6 production phases.
-- **PoC underway (2026-05-05)** — building and learning together in `infra/poc/` on the home server before any VPS spend.
-- Control plane language decided: **Python + FastAPI**.
-- Encryption approach decided: **gocryptfs**, always on, hard fail at startup if not available.
-- Files complete: `encryption.py`, `docker_client.py`, `apps/catalog.json`, `apps/loader.py`, `database.py`, `provisioner.py`, `requirements.txt`, `.env.example`.
-- `provisioner.py` owns the full provision/deprovision lifecycle: path traversal validation → encrypted volume init/mount → Docker network + container → DB write-ahead → health poll → unmount on cleanup.
-- Security note: `user_id` and `app_id` are validated against `r"[a-zA-Z0-9][a-zA-Z0-9_-]{0,62}"` before any filesystem or Docker call. Error messages do not echo raw input values.
-- Next session: (1) verify gocryptfs installed, (2) copy `.env.example` → `.env` and set `MASTER_SECRET`, (3) run `test_provision.py` from `infra/poc/` to validate end-to-end, (4) build `main.py` (FastAPI routes + HTML dashboard), (5) write `setup.sh`.
-- Test script to run: `infra/poc/test_provision.py` — creates user `alice`, provisions `vaultwarden`, prints `localhost:{port}`.
-- Landing page PMF validation is still running in parallel.
+- **PoC running on home server.** All core files complete and tested.
+- Control plane language: **Python + FastAPI**.
+- Encryption: **gocryptfs**, always on.
+
+### Files Complete
+
+| File | Status | Notes |
+|------|--------|-------|
+| `encryption.py` | Done | gocryptfs init/mount/unmount, HMAC-SHA256 key derivation |
+| `docker_client.py` | Done | Docker SDK wrapper — networks, containers, resource limits, port binding, `container_user` support |
+| `apps/catalog.json` | Done | Vaultwarden, Actual Budget, Mealie — with `privacy_tier`, `privacy_note`, and `container_user` fields |
+| `apps/loader.py` | Done | Typed `AppConfig` dataclasses; validates `privacy_tier` at load time |
+| `database.py` | Done | SQLite schema (users + installs tables) + full CRUD layer |
+| `provisioner.py` | Done | Full provision/deprovision lifecycle. Blocks on any existing install (not just "running"). Cleans up stale record on health-check timeout. Passes `container_user` to Docker. |
+| `main.py` | Done | FastAPI + HTML dashboard. All dynamic values escaped with `html.escape()`. Form redirects use `urlquote()`. XSS-safe. |
+| `requirements.txt` | Done | Pinned: docker, fastapi, uvicorn, python-dotenv |
+| `.env.example` | Done | Documents `MASTER_SECRET` and `DATA_ROOT` |
+| `test_provision.py` | Done | End-to-end smoke test |
+| `setup.sh` | **Pending** | One-shot setup script — next item |
+
+### PoC Validation Status
+
+- Provisioning and deprovisioning work for all 3 apps (Vaultwarden, Actual Budget, Mealie).
+- Dashboard (`http://localhost:8000`) handles 3 installs concurrently.
+- **Known gap**: Accessing the running services via the bound host port has not been fully validated. Port binding appears to work, but actual browser access to each app has not been confirmed end-to-end. Investigate next session.
+
+### Bugs Fixed This Session
+
+- **`UnboundLocalError` on `html`**: Local variable named `html` shadowed `import html` throughout the dashboard function. Renamed to `page`.
+- **`sqlite3.IntegrityError` on re-provision**: Stale "installing" record from a crashed provision attempt blocked future provision with an uncaught exception type. Fixed by blocking on *any* existing install status (not just "running") and catching `IntegrityError` at the provisioner level.
+- **Mealie `PermissionError`**: Mealie's image runs as uid 911. gocryptfs plaintext dir is owned by uid 1000 (mode 775). Fix: added `"container_user": "1000:1000"` to mealie's catalog entry, wired through loader → provisioner → docker_client as the Docker `user=` parameter.
+- **XSS**: All user-supplied values in the HTML dashboard now passed through `html.escape()` (with `quote=True` for attribute context).
+- **Orphaned install record**: Health-check timeout path now calls `delete_install()` before raising, preventing stale DB records from blocking future provisions.
+
+### Open Questions / Future Work
+
+- **Username encryption**: The `user_id` is currently used as a plain directory name on disk (e.g., `DATA_ROOT/alice/vaultwarden/`). If the server is ever compromised, directory names reveal which users have which apps installed. Explore hashing or encrypting the `user_id` component of the filesystem path so the on-disk layout leaks nothing about the user. This is a metadata privacy improvement — the volume contents are already encrypted by gocryptfs.
+- **Port access validation**: Confirm that bound ports are reachable in-browser and that apps respond correctly. May need to check Docker network mode, firewall rules, or Traefik-style routing.
+- **`setup.sh`**: One-shot script to install dependencies (gocryptfs, Python, Docker), generate `.env`, and start the server.
+- **Commit pending changes**: `main.py`, `catalog.json`, `loader.py`, `docker_client.py`, `provisioner.py`, `infra/CLAUDE.md` all have uncommitted changes.
+
+### gocryptfs + Docker Permission Model (Reference)
+
+- gocryptfs mounts are owned by uid 1000. Docker daemon runs as root.
+- `/etc/fuse.conf` must have `user_allow_other` uncommented; `mount_volume()` passes `-allow_other`.
+- This does not break privacy: encryption protects against third parties (disk theft, provider breach), not against the operator. The operator holds `MASTER_SECRET` regardless.
+- Long-term fix: rootless Docker (planned for v2 alongside gVisor).
 
 ---
 

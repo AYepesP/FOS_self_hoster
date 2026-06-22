@@ -68,6 +68,7 @@ def provision(user_id, app_id):
     else:
         stop_container(container_name)
         unmount_volume(plaintext_path)
+        delete_install(user_id, app_id)
         raise RuntimeError(f"Container for {app_id} did not become healthy within 60 seconds")
 
     update_install(user_id, app_id, container_id, host_port, "running")

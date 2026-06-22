@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/bin/python -c \"import sys; sys.path.insert\\(0, 'control_plane'\\); import main; print\\('OK'\\)\")",
+      "Bash(.venv/bin/python -c ' *)",
+      "Bash(docker run *)"
+    ]
+  }
+}
