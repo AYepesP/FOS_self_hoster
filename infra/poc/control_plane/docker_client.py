@@ -30,6 +30,7 @@ def start_container(
     mem_limit: str,
     cpu_quota: int,
     environment: dict,
+    container_user: str | None = None,
 ) -> tuple[str, int]:
     client = get_client()
     container_name = f"almerno_{user_id}_{app_id}"
@@ -54,6 +55,7 @@ def start_container(
         restart_policy={"Name": "unless-stopped"},
         detach=True,
         security_opt=["no-new-privileges:true"],
+        **({"user": container_user} if container_user else {}),
     )
 
     container.reload()

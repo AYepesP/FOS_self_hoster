@@ -57,6 +57,7 @@ def provision(user_id, app_id):
         mem_limit=app.mem_limit,
         cpu_quota=app.cpu_quota,
         environment=app.environment,
+        container_user=app.container_user,
     )
 
     container_name = f"almerno_{user_id}_{app_id}"

@@ -21,6 +21,7 @@ class AppConfig:
     privacy_tier: str
     privacy_note: str
     environment: dict[str, str]
+    container_user: str | None = None
 
 
 def load_catalog() -> dict[str, AppConfig]:
@@ -44,6 +45,7 @@ def load_catalog() -> dict[str, AppConfig]:
             privacy_tier=tier,
             privacy_note=entry["privacy_note"],
             environment=entry.get("environment", {}),
+            container_user=entry.get("container_user"),
         )
 
     return catalog
